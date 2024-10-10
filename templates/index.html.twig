@@ -12,35 +12,31 @@
     </div>
 
     <h1>Actualité</h1>
-    <div class="index-news-list flx-row">
-        {% if lastarticle is not empty %}
-            <a href="/news/{{ lastarticle[0].id }}" id="last-news" style="background-image: url('{{ lastarticle[0].getImaageUrL() }}')">
-                <div class="last-article-content w-100">
-                    <div id="article-title">
-                        <span id="article-title-text">{{ lastarticle[0].title }}</span>
+    <div class="global-container-news">
+        <div class="index-news-list flx-row">
+            {% if lastarticle is not empty %}
+                <a href="/news/{{ lastarticle[0].id }}" id="last-news" style="background-image: url('{{ lastarticle[0].getImaageUrL() }}')">
+                    <div class="last-article-content w-100">
+                        <div id="article-title">
+                            <span id="article-title-text">{{ lastarticle[0].title }}</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-        {% else %}
-            <p>Aucun article disponible pour le moment.</p>
-        {% endif %}
-    </div>
+                </a>
 
-<!--
-    <div class="other-news flx-column">
-        {% if lastarticle|length > 1 %}
-            <a href="/news/{{ lastarticle[1].id }}" class="a-news w-100" style="background-image: url('{{ lastarticle[1].ImageUrL }}')">
-                <div class="last-article-content w-100">
-                    <div id="article-title">
-                        <span id="article-title-text">{{ lastarticle[1].title }}</span>
+                <a href="/news/{{ lastarticle[1].id }}" id="last-news" style="background-image: url('{{ lastarticle[1].getImaageUrL() }}')">
+                    <div class="last-article-content w-100">
+                        <div id="article-title">
+                            <span id="article-title-text">{{ lastarticle[1].title }}</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-        {% else %}
-            <p>Pas d'autres articles disponibles pour le moment.</p>
-        {% endif %}
-    </div>
-    -->
+                </a>
+
+
+            {% else %}
+                <p>Aucun article disponible pour le moment.</p>
+            {% endif %}
+        </div>
+
 
     </div>
 

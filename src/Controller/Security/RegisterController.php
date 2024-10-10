@@ -5,6 +5,7 @@ namespace App\Controller\Security;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use App\Security\LoginAuthenticator;
+use App\Entity\Rank;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +45,13 @@ class RegisterController extends AbstractController
                 ->setPoints(0)
                 ->setRoles(['ROLE_USER'])
                 ->setVerified(false);
+
+            $defaultRank = $entityManager->getRepository(Rank::class)->findOneBy(['name' => 'Default']);
+            if ($defaultRank) {
+                $user->setRank($defaultRank);
+            } else {
+                throw new \Exception('Le rang par défaut n\'a pas été trouvé.');
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();

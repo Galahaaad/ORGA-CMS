@@ -19,8 +19,10 @@ class ForumPostsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->setLabel('ID du topic'),
+            IdField::new('id')->setLabel('ID du topic')->hideOnForm(),
             TextField::new('title')->setLabel('Titre'),
+            TextField::new('author')->setLabel('Auteur'),
+            TextField::new('forumlink')->setLabel('Lien du Forum'),
             TextEditorField::new('description')->setLabel('Description'),
         ];
     }

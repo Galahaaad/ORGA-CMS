@@ -15,7 +15,6 @@
         "doctrine/orm": "^2.8",
         "easycorp/easyadmin-bundle": "^3.2",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
-        "nucleos/antispam-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.2.*",
@@ -41,6 +40,7 @@
         "symfony/translation": "5.2.*",
         "symfony/twig-bundle": "^5.2",
         "symfony/ux-chartjs": "^1.2",
+        "symfony/ux-turbo": "^2.20",
         "symfony/validator": "5.2.*",
         "symfony/web-link": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.11",
@@ -50,6 +50,7 @@
         "vich/uploader-bundle": "^1.16"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/browser-kit": "^5.2",
         "symfony/css-selector": "^5.2",
         "symfony/debug-bundle": "^5.2",
@@ -64,7 +65,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {

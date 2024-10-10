@@ -12,41 +12,35 @@
     </div>
 
     <h1>Actualité</h1>
-
     <div class="index-news-list flx-row">
-
-    <a href="/news/{{ lastarticle[0].id }}" id="last-news" style="background-image: url('{{ lastarticle[0].ImaageUrL }}')">
-            <div class="last-article-content w-100">
-           <div id="article-title">
-             <span id="article-title-text">{{ lastarticle[0].title }} </span>
-           </div>
-            </div>
-    </a>
-
-        <div class="other-news flx-column">
-
-            <a href="/news/{{ lastarticle[1].id }}" class="a-news w-100" style="background-image: url('{{ lastarticle[1].ImaageUrL }}')">
+        {% if lastarticle is not empty %}
+            <a href="/news/{{ lastarticle[0].id }}" id="last-news" style="background-image: url('{{ lastarticle[0].getImaageUrL() }}')">
                 <div class="last-article-content w-100">
                     <div id="article-title">
-                        <span id="article-title-text">{{ lastarticle[1].title }} </span>
+                        <span id="article-title-text">{{ lastarticle[0].title }}</span>
                     </div>
                 </div>
             </a>
-            <a href="/news/{{ lastarticle[2].id }}" class="a-news w-100" style="background-image: url('{{ lastarticle[2].ImaageUrL }}')">
+        {% else %}
+            <p>Aucun article disponible pour le moment.</p>
+        {% endif %}
+    </div>
+
+<!--
+    <div class="other-news flx-column">
+        {% if lastarticle|length > 1 %}
+            <a href="/news/{{ lastarticle[1].id }}" class="a-news w-100" style="background-image: url('{{ lastarticle[1].ImageUrL }}')">
                 <div class="last-article-content w-100">
                     <div id="article-title">
-                        <span id="article-title-text">{{ lastarticle[2].title }} </span>
+                        <span id="article-title-text">{{ lastarticle[1].title }}</span>
                     </div>
                 </div>
             </a>
-            <a href="/news/{{ lastarticle[3].id }}" class="a-news w-100" style="background-image: url('{{ lastarticle[3].ImaageUrL }}')">
-                <div class="last-article-content w-100">
-                    <div id="article-title">
-                        <span id="article-title-text">{{ lastarticle[3].title }} </span>
-                    </div>
-                </div>
-            </a>
-        </div>
+        {% else %}
+            <p>Pas d'autres articles disponibles pour le moment.</p>
+        {% endif %}
+    </div>
+    -->
 
     </div>
 
@@ -78,7 +72,7 @@
                     <img src="https://api.habbocity.me/avatar_image.php?user={{ post.author }}&headonly=0&direction=2&head_direction=2&size=l" alt="Auteur du topic">
                     <div class="forum-post-desc flx-column">
                     <h3>{{ post.title }}</h3>
-                        <span>{{ post.description }}</span>
+                        <span>{{ post.description | raw  }}</span>
                         <span class="auteur">{{ post.author }}</span>
                     </div>
                     <a href="{{ post.forumlink }}" class="gotoroom"><i class="fi-rr-angle-double-small-right"></i></a>

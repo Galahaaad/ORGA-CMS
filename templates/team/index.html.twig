@@ -3,7 +3,7 @@
 {% block title %}{{site_name}} : Notre équipe{% endblock %}
 
 {% block body %}
-    {% for rank in ranks|reverse %}
+    {% for rank in ranks %}
 
         {% if rank.id > 1 %}
             <!-- We get ranks except member's one -->

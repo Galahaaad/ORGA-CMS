@@ -1,100 +1,128 @@
 <?php
 
-
 namespace App;
+use Symfony\Component\Dotenv\Dotenv;
 
-
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/../.env');
 class Api {
 
-    private $data;
-    private $apiKey;
-    private $userName;
-    private $erreur;
+private $data;
+private $apiKey;
+private $userName;
+private $erreur;
 
-    private static function cURL($url) {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        return json_decode($response);
+private static function cURL($url) {
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+$response = curl_exec($ch);
+curl_close($ch);
+return json_decode($response);
+}
+
+public function __construct($userName) {
+$this->userName = $userName;
+$this->apiKey = getenv('API_KEY');
+$this->data = Api::cURL("https://api.habbocity.me/avatar_info.php?key=Irone_8798&user=".$this->userName."&selectedBadges&wealth&rooms&lastTweets&statistics");
+$this->checkErreur();
+}
+    public function getPlayingTime(): int {
+        return $this->getProperty('statistics')->playingTime ?? 0;
     }
 
-    public function __construct($userName) {
-        $this->userName = $userName;
-        $this->apiKey = getenv('API_KEY');
-        $this->data = Api::cURL("https://api.habbocity.me/avatar_info.php?key=Cr53Rcgt67&user=".$this->userName."&selectedBadges&wealth&rooms&lastTweets");
-        $this->checkErreur();
+    public function getRespects(): int {
+        return $this->getProperty('statistics')->respects ?? 0;
     }
 
-    public function getId(): int {
-        return $this->data->uniqueId;
+    public function getChatCount(): int {
+        return $this->getProperty('statistics')->chatCount ?? 0;
     }
 
-    public function getName(): string {
-        return $this->data->name;
+    public function getBuildCount(): int {
+        return $this->getProperty('statistics')->buildCount ?? 0;
     }
 
-    public function getMission(): string {
-        return $this->data->motto;
+    public function getVisitedRooms(): int {
+        return $this->getProperty('statistics')->visitedRooms ?? 0;
     }
 
-    public function getAvatar(): string {
-        return $this->data->avatar;
+    public function getPrivateChatCount(): int {
+        return $this->getProperty('statistics')->privateChatCount ?? 0;
     }
 
-    public function getOnline(): bool {
-        return $this->data->online;
+    public function getMovementsCount(): int {
+        return $this->getProperty('statistics')->movementsCount ?? 0;
+    }
+    public function getWinWins(): int {
+        return $this->getProperty('winwins', 0);
     }
 
-    public function getRegister(): int {
-        return $this->data->register;
-    }
+private function getProperty(string $property, $default = null) {
+return property_exists($this->data, $property) ? $this->data->$property : $default;
+}
 
-    public function getDiamonds(): int {
-        return $this->data->diamonds;
-    }
+public function getId(): int {
+return $this->getProperty('uniqueId', 0);
+}
 
-    public function getRooms(): array{
-        return $this->data->rooms;
-    }
+public function getName(): string {
+return $this->getProperty('name', 'Nom inconnu');
+}
 
-    public function getWealth(): array {
-        return $this->data->wealth;
-    }
+public function getMission(): string {
+return $this->getProperty('motto', 'Mission non définie');
+}
 
-    public function __toString(): string
-    {
-        return $this->data->wealth->date;
-    }
+public function getAvatar(): string {
+return $this->getProperty('avatar', 'Avatar indisponible');
+}
 
-    public function getListBadge(): ?array {
+public function getOnline(): bool {
+return $this->getProperty('online', false);
+}
 
-        if($this->erreur != null)
-            return null;
+public function getRegister(): int {
+return $this->getProperty('register', 0);
+}
 
-        return json_decode(json_encode($this->data->selectedBadges),true);
-    }
+public function getDiamonds(): int {
+return $this->getProperty('diamonds', 0);
+}
 
-    public function getListGroupe(): ?array {
-        if($this->erreur != null) return null;
-        return json_decode(json_encode($this->data->joinGroup),true);
-    }
+public function getRooms(): array {
+return $this->getProperty('rooms', []);
+}
 
-    private function checkErreur(): void {
+public function getWealth(): array {
+return $this->getProperty('wealth', []);
+}
 
-        if($this->data == null) {
-            $this->erreur = "Nous avons pas rÃ©ussi Ã  effectuer la requÃªte vers le serveur d'HabboCity.";
-        } else {
+public function __toString(): string {
+return $this->getProperty('wealth')->date ?? 'Date indisponible';
+}
 
-            /*
-            if(array_key_exists("type", $this->data) && $this->data->type == "error")
-                $this->erreur = $this->data->message;
-            */
-        }
-    }
+public function getListBadge(): ?array {
+return $this->getProperty('selectedBadges', []);
+}
 
-    public function getErreur() {
-        return $this->erreur;
-    }
+public function getListGroupe(): ?array {
+return $this->getProperty('joinGroup', []);
+}
 
+private function checkErreur(): void {
+if ($this->data == null) {
+$this->erreur = "Nous n'avons pas réussi à effectuer la requête vers le serveur d'HabboCity.";
+} else {
+// Décommenter si l'API renvoie explicitement des erreurs
+/*
+if (property_exists($this->data, 'type') && $this->data->type == "error") {
+$this->erreur = $this->data->message;
+}
+*/
+}
+}
+
+public function getErreur() {
+return $this->erreur;
+}
 }

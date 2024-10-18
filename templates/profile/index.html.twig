@@ -38,13 +38,13 @@
     <div class="user-purse w-100 flx-row">
         <div class="purse-box flx-row">
             <div class="badge-list">
-            {% for badge in userBadges %}
+            {% for badge in userBadges|slice(0, 4) %}
                 <img src="https://swf.habbocity.me/c_images/album1584/{{ badge.code }}.gif" alt="Badge" class="user-badge">
             {% endfor %}
             </div>
         </div>
         <div class="purse-box diamonds-box flx-row">
-            <div class="diamonds-icon"></div>
+            <div class="diamonds-icon"><img src="https://www.habbocity.me/assets/img/center/navigation/1.png" /></div>
             <h2>{{ userDiamonds }} diamants</h2>
         </div>
         {% if user.verified %}
@@ -57,66 +57,52 @@
             </div>
         {% endif %}
     </div>
-    <div class="netWorth-chart">
-    <canvas id="myChart" width="400" height="400"></canvas>
+
+    <h2>Statistiques sur l'hôtel</h2>
+    <div class="stat-list">
+
+        <div class="stat-item">
+            <img src="https://www.habbocity.me/assets/img/profil/icon_gamer.png" />
+            <h3>Score de win-win : </h3>
+            <span> {{ userWinWins }} </span>
+        </div>
+
+        <div class="stat-item">
+            <img src="https://www.habbocity.me/assets/img/profil/icon_post.png" />
+            <h3>Messages envoyés : </h3>
+            <span> {{ chatCount }} </span>
+        </div>
+
+        <div class="stat-item">
+            <img src="https://www.habbocity.me/assets/img/home/icon_time.png" />
+            <h3>Intéractions build : </h3>
+            <span> {{ buildCount }} </span>
+        </div>
+
     </div>
-{% endblock %}
 
-{% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" type="application/javascript"></script>
-    <script>
-        let labelsArray = [];
-        let netWorth = [];
-        {% for data in userWealth %}
-            labelsArray.push({{ data.date }});
-            netWorth.push({{ data.netWorth }});
-        {% endfor %}
-        var ctx = document.getElementById('myChart').getContext('2d');
-        ctx.canvas.width = 1000;
-        ctx.canvas.height = 400;
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labelsArray.reverse(),
-                datasets: [{
-                    label: 'Richesse totale',
-                    data: netWorth.reverse(),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 3
-                }]
-            },
-            responsive: true,
-            options: {
-                animation: {
-                  duration: 1000,
-                  easing: 'easeOutQuart'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-            }
-        });
-        Chart.defaults.global.defaultFontColor = 'white';
-        Chart.defaults.global.defaultFontFamily = 'Ubuntu Condensed';
-    </script>
+    <div class="stat-list" style="margin-top: 20px;">
+        <div class="stat-item">
+            <img src="https://www.habbocity.me/assets/img/header/v2/icon_dark.png" />
+            <h3>Rooms visitées : </h3>
+            <span> {{ visitedRooms }} </span>
+        </div>
+
+        <div class="stat-item">
+            <img src="https://www.habbocity.me/assets/img/32_icon_chat.png" />
+            <h3>Messages privés : </h3>
+            <span> {{ privateChatCount }} </span>
+        </div>
+
+        <div class="stat-item">
+            <img src="https://www.habbocity.me/assets/img/profil/icon_time.png" />
+            <h3>Heures de connexion : </h3>
+            <span> {{ userPlayingTime // 3600 }} </span>
+        </div>
+
+    </div>
+
+
 
 {% endblock %}
+

@@ -25,6 +25,13 @@ class ProfileController extends AbstractController
         $userMotto = $api->getMission();
         $userDiamonds = $api->getDiamonds();
         $userWealth = $api->getWealth();
+        $userPlayingTime = $api->getPlayingTime();
+        $userWinWins = $api->getWinWins();
+        $chatCount = $api->getChatCount();
+        $buildCount = $api->getBuildCount();
+        $visitedRooms = $api->getVisitedRooms();
+        $privateChatCount = $api->getPrivateChatCount();
+        $movementsCount = $api->getMovementsCount();
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
@@ -33,7 +40,15 @@ class ProfileController extends AbstractController
             'userDiamonds' => $userDiamonds,
             'comments' => $comments,
             'userWealth' => $userWealth,
-            'userBadges' => $userBadges
+            'userBadges' => $userBadges,
+            'userPlayingTime' => $userPlayingTime,
+            'userWinWins' => $userWinWins,
+            'chatCount' => $chatCount,
+            'buildCount' => $buildCount,
+            'visitedRooms' => $visitedRooms,
+            'privateChatCount' => $privateChatCount,
+            'movementsCount' => $movementsCount,
+
             ]);
     }
 }

@@ -4,16 +4,15 @@
 {%  block body %}
 
     <div class="page-info">
-        <img src="https://images.habbo.com/c_images/web_promo_small/spromo_DivineStatue_May22.png"   alt="Page Info Image">
+        <img src="https://www.habbocity.me/assets/img/gamers/icon_forum.png"   alt="Page Info Image">
         <div class="page-info--content">
-            <h1>Accueil</h1>
             <span>Bienvenue sur notre site, ici tu pourras découvrir l'actualité d'Habbocity ainsi que des concours organisés par nos soins</span>
         </div>
     </div>
 
     <h1>Actualité</h1>
     <div class="global-container-news">
-        <div class="index-news-list flx-row">
+        <div class="index-news-list flx-row" style="justify-content: space-between;">
             {% if lastarticle is not empty %}
                 <a href="/news/{{ lastarticle[0].id }}" id="last-news" style="background-image: url('{{ lastarticle[0].getImaageUrL() }}')">
                     <div class="last-article-content w-100">
@@ -31,6 +30,14 @@
                     </div>
                 </a>
 
+                <a href="/news/{{ lastarticle[2].id }}" id="last-news" style="background-image: url('{{ lastarticle[2].getImaageUrL() }}')">
+                    <div class="last-article-content w-100">
+                        <div id="article-title">
+                            <span id="article-title-text">{{ lastarticle[2].title }}</span>
+                        </div>
+                    </div>
+                </a>
+
 
             {% else %}
                 <p>Aucun article disponible pour le moment.</p>
@@ -41,6 +48,33 @@
     </div>
 
     <div  class="w-100" id="btn-see-more"><a href="/news"> Voir plus de news... <i class="fi-rr-eye"></i>   </a></div>
+
+    <div class="latest-badges">
+        <h1>Derniers badges</h1>
+        <div class="badges-listing">
+
+                    <div class="badge-item">
+                        <img src="https://swf.habbocity.me/c_images/album1584/PTD65.gif" alt="Badge">
+                        <span>Satan</span>
+                    </div>
+
+                    <div class="badge-item">
+                        <img src="https://swf.habbocity.me/c_images/album1584/PTD65.gif" alt="Badge">
+                        <span>Satan</span>
+                    </div>
+
+                    <div class="badge-item">
+                        <img src="https://swf.habbocity.me/c_images/album1584/PTD65.gif" alt="Badge">
+                        <span>Satan</span>
+                    </div>
+
+                    <div class="badge-item">
+                        <img src="https://swf.habbocity.me/c_images/album1584/PTD65.gif" alt="Badge">
+                        <span>Satan</span>
+                    </div>
+
+        </div>
+    </div>
 
     <div class="index-two-columns flx-row">
         <div class="last-appartments">
@@ -81,7 +115,7 @@
     <h1>Flux City</h1>
 
     <div class="flux-city flx-row w-100">
-        {% for data in staffStream %}
+        {% for data in staffStream |slice(0, 3)  %}
         <div class="box-flux flx-row">
             <img src="https://api.habbocity.me/avatar_image.php?user={{ data.pseudo }}&headonly=0&direction=2&head_direction=2&size=l" alt="avatar" class="box-flux-avatar">
             <div class="box-flux--desc flx-column">
